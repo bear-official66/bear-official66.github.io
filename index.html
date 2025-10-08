@@ -435,8 +435,8 @@
     </div>
     
 
-    <div id="leaderboard-section" class="text-section">
-  <h2 class="section-header manipulation-color">Video Understanding Benchmark Leaderboard</h2>
+ <div id="leaderboard-section" class="text-section">
+  <h2>Video Understanding Benchmark Leaderboard</h2>
   <p>Performance comparison of leading models on trajectory and spatial reasoning tasks.</p>
   
   <style>
@@ -446,6 +446,53 @@
       box-shadow: 0 4px 20px rgba(0,0,0,0.1);
       overflow: hidden;
       margin: 20px 0;
+    }
+
+    .leaderboard-tabs {
+      display: flex;
+      background: #f8f9fa;
+      border-bottom: 2px solid #dee2e6;
+      overflow-x: auto;
+      scrollbar-width: thin;
+    }
+
+    .leaderboard-tabs::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .leaderboard-tabs::-webkit-scrollbar-thumb {
+      background: #6c757d;
+      border-radius: 3px;
+    }
+
+    .leaderboard-tab {
+      padding: 15px 25px;
+      cursor: pointer;
+      white-space: nowrap;
+      font-weight: 600;
+      color: #495057;
+      border-bottom: 3px solid transparent;
+      transition: all 0.3s ease;
+      user-select: none;
+    }
+
+    .leaderboard-tab:hover {
+      background: #e9ecef;
+      color: #212529;
+    }
+
+    .leaderboard-tab.active {
+      color: #667eea;
+      border-bottom-color: #667eea;
+      background: white;
+    }
+
+    .leaderboard-content {
+      display: none;
+    }
+
+    .leaderboard-content.active {
+      display: block;
     }
 
     .leaderboard-legend {
@@ -544,8 +591,9 @@
     .leaderboard-section-header {
       background: #e9ecef !important;
       font-weight: 700;
-      text-align: left !important;
-      padding-left: 20px !important;
+      text-align: center !important;
+      padding: 12px !important;
+      font-size: 14px;
     }
 
     @media (max-width: 768px) {
@@ -562,30 +610,50 @@
         font-size: 11px;
         gap: 15px;
       }
+
+      .leaderboard-tab {
+        padding: 12px 20px;
+        font-size: 13px;
+      }
     }
   </style>
 
   <div class="leaderboard-container">
-    <div class="leaderboard-legend">
-      <div class="leaderboard-legend-item">
-        <div class="leaderboard-legend-box" style="background: #e3d4f4;"></div>
-        <span>Overall Best</span>
+    <!-- 标签页导航 -->
+    <div class="leaderboard-tabs">
+      <div class="leaderboard-tab active" onclick="switchLeaderboardTab(event, 'tab1')">
+        Main Results
       </div>
-      <div class="leaderboard-legend-item">
-        <div class="leaderboard-legend-box" style="background: #d4edda;"></div>
-        <span>Open-source Best</span>
+      <div class="leaderboard-tab" onclick="switchLeaderboardTab(event, 'tab2')">
+        CoT Quality
       </div>
-      <div class="leaderboard-legend-item">
-        <div class="leaderboard-legend-box" style="background: #fff3cd;"></div>
-        <span>Proprietary Models</span>
-      </div>
-      <div class="leaderboard-legend-item">
-        <div class="leaderboard-legend-box" style="background: #d1ecf1;"></div>
-        <span>Human Performance</span>
+      <div class="leaderboard-tab" onclick="switchLeaderboardTab(event, 'tab3')">
+        Ablation Study
       </div>
     </div>
-    
-    <div class="leaderboard-wrapper">
+
+    <!-- 第一个表格：Main Results -->
+    <div id="tab1" class="leaderboard-content active">
+      <div class="leaderboard-legend">
+        <div class="leaderboard-legend-item">
+          <div class="leaderboard-legend-box" style="background: #e3d4f4;"></div>
+          <span>Overall Best</span>
+        </div>
+        <div class="leaderboard-legend-item">
+          <div class="leaderboard-legend-box" style="background: #d4edda;"></div>
+          <span>Open-source Best</span>
+        </div>
+        <div class="leaderboard-legend-item">
+          <div class="leaderboard-legend-box" style="background: #fff3cd;"></div>
+          <span>Proprietary Models</span>
+        </div>
+        <div class="leaderboard-legend-item">
+          <div class="leaderboard-legend-box" style="background: #d1ecf1;"></div>
+          <span>Human Performance</span>
+        </div>
+      </div>
+      
+      <div class="leaderboard-wrapper">
         <table class="leaderboard-table">
           <thead>
             <tr>
@@ -755,11 +823,174 @@
               <td>11.3</td>
               <td>25.7</td>
             </tr>
-            </tbody>
-          </table>
-        </div>
+          </tbody>
+        </table>
       </div>
     </div>
+
+    <!-- 第二个表格：CoT Quality -->
+    <div id="tab2" class="leaderboard-content">
+      <div class="leaderboard-legend">
+        <div class="leaderboard-legend-item">
+          <div class="leaderboard-legend-box" style="background: #e3d4f4;"></div>
+          <span>Best Performance</span>
+        </div>
+        <div class="leaderboard-legend-item">
+          <div class="leaderboard-legend-box" style="background: #fff3cd;"></div>
+          <span>Proprietary Models</span>
+        </div>
+      </div>
+      
+      <div class="leaderboard-wrapper">
+        <table class="leaderboard-table">
+          <thead>
+            <tr>
+              <th rowspan="2">Model</th>
+              <th colspan="3" class="group-header">CoT Quality Metrics</th>
+              <th rowspan="2">Overall Score</th>
+            </tr>
+            <tr>
+              <th>F1 Score</th>
+              <th>Precision</th>
+              <th>Recall</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td colspan="5" class="leaderboard-section-header">Proprietary Models</td>
+            </tr>
+            
+            <tr class="leaderboard-proprietary">
+              <td class="leaderboard-model-name">Kimi k1.5</td>
+              <td class="leaderboard-best">64.2</td>
+              <td class="leaderboard-best">92.0</td>
+              <td>49.3</td>
+              <td class="leaderboard-best">68.5</td>
+            </tr>
+            
+            <tr class="leaderboard-proprietary">
+              <td class="leaderboard-model-name">GPT-4o</td>
+              <td class="leaderboard-best">64.0</td>
+              <td>85.4</td>
+              <td>51.2</td>
+              <td>66.9</td>
+            </tr>
+            
+            <tr class="leaderboard-proprietary">
+              <td class="leaderboard-model-name">QVQ-72B</td>
+              <td>62.0</td>
+              <td>80.2</td>
+              <td class="leaderboard-best">50.5</td>
+              <td>64.2</td>
+            </tr>
+            
+            <tr>
+              <td colspan="5" class="leaderboard-section-header">Open-source Models</td>
+            </tr>
+            
+            <tr>
+              <td class="leaderboard-model-name">Virgo-72B</td>
+              <td>60.8</td>
+              <td>79.5</td>
+              <td>49.2</td>
+              <td>63.2</td>
+            </tr>
+            
+            <tr>
+              <td class="leaderboard-model-name">JT-VL-Chat</td>
+              <td>58.9</td>
+              <td>88.0</td>
+              <td>44.3</td>
+              <td>63.7</td>
+            </tr>
+            
+            <tr>
+              <td class="leaderboard-model-name">Qwen2-VL-72B</td>
+              <td>56.2</td>
+              <td>77.3</td>
+              <td>44.2</td>
+              <td>59.2</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 第三个表格：Ablation Study -->
+    <div id="tab3" class="leaderboard-content">
+      <div class="leaderboard-legend">
+        <div class="leaderboard-legend-item">
+          <div class="leaderboard-legend-box" style="background: #d4edda;"></div>
+          <span>Best Configuration</span>
+        </div>
+      </div>
+      
+      <div class="leaderboard-wrapper">
+        <table class="leaderboard-table">
+          <thead>
+            <tr>
+              <th>Configuration</th>
+              <th>Accuracy</th>
+              <th>Inference Time</th>
+              <th>Memory Usage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td colspan="4" class="leaderboard-section-header">Model Variants</td>
+            </tr>
+            
+            <tr>
+              <td class="leaderboard-model-name">Base Model</td>
+              <td>45.3</td>
+              <td>120ms</td>
+              <td>8GB</td>
+            </tr>
+            
+            <tr>
+              <td class="leaderboard-model-name">+ Chain-of-Thought</td>
+              <td class="leaderboard-top-opensource">52.7</td>
+              <td>180ms</td>
+              <td>10GB</td>
+            </tr>
+            
+            <tr>
+              <td class="leaderboard-model-name">+ Multi-frame Input</td>
+              <td>48.9</td>
+              <td>250ms</td>
+              <td>12GB</td>
+            </tr>
+            
+            <tr>
+              <td class="leaderboard-model-name">Full Model (All Features)</td>
+              <td class="leaderboard-top-opensource">58.4</td>
+              <td>320ms</td>
+              <td>16GB</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function switchLeaderboardTab(event, tabId) {
+      // 隐藏所有内容
+      const contents = document.querySelectorAll('.leaderboard-content');
+      contents.forEach(content => content.classList.remove('active'));
+      
+      // 移除所有标签的active状态
+      const tabs = document.querySelectorAll('.leaderboard-tab');
+      tabs.forEach(tab => tab.classList.remove('active'));
+      
+      // 显示选中的内容
+      document.getElementById(tabId).classList.add('active');
+      
+      // 添加active状态到点击的标签
+      event.currentTarget.classList.add('active');
+    }
+  </script>
+</div>
 
       <div id="podcast-section" class="text-section">
         <h2>Podcast</h2>
