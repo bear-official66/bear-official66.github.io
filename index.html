@@ -102,7 +102,7 @@
       }
 
       .authors {
-        margin-top: 1.1rem;
+        margin-top: 1.2rem;
       }
 
       .authors a {
@@ -219,7 +219,7 @@
 
       .overview-title {
         font-weight: bold;
-        font-size: 1.3rem;
+        font-size: 1.4rem;
         margin: 0;
       }
 
@@ -420,7 +420,7 @@
     <div class="text-section">
       <h2>BEAR Benchmark Overview</h2>
       <p>
-        <strong>BEAR focuses on 14 different step-wise embodied skills from 6 different categories</strong>. BEAR has 5 basic categories, Pointing, Bounding Box, Trajectory Reasoning, Spatial Reasoning, Task Planning. The 6th category, long-horizon category, features episodes collected from simulation. The 14 skills are inductively summarized from large-scale large-scale embodied household activity dataset such as <a href="https://behavior.stanford.edu/index.html" target="_blank" rel="noopener noreferrer">BEHAVIOR-1K</a> and inspired by human activities.
+        <strong>BEAR focuses on 14 fine-grained step-wise embodied skills from 6 different categories</strong>. BEAR has 5 basic categories, Pointing, Bounding Box, Trajectory Reasoning, Spatial Reasoning, Task Planning. The 6th category, long-horizon category, features episodes collected from simulation. The 14 skills are inductively summarized from large-scale large-scale embodied household activity dataset such as <a href="https://behavior.stanford.edu/index.html" target="_blank" rel="noopener noreferrer">BEHAVIOR-1K</a> and inspired by human activities.
       </p>
       <img src="assets/figure1.pdf" type="application/pdf" width="100%" height="600px" />
     </div>
@@ -428,7 +428,7 @@
     <div class="text-section">
       <h2>Long-horizon Category</h2>
       <p>
-        Long-horizon category <strong>for the first time</strong> decomposes 35 embodied tasks into skill-level atomic decision-making steps. Our episodes are collected from <a href="https://ai2thor.allenai.org/" target="_blank" rel="noopener noreferrer">AI2-THOR</a>, and each skill-level step corresponds to 14 skills in our taxonomy.
+       <strong>Long-horizon</strong> tasks are introduced by decomposing embodied episodes into skill-oriented steps for \textbf{offline evaluation}. This category includes 35 episodes from AI2-THOR~\citep{ehsani2021manipulathor}, each annotated with structured skill steps. As shown in the following image, the task `put the apple in the sink' is broken down into planning, object search, navigation, spatial reasoning, perception, and placement. Each step maps to an atomic skill in BEAR, demonstrating that our taxonomy is both cognitively motivated and practically grounded in embodied tasks.
       </p>
       <img src="assets/long_horizon_figure.pdf" type="application/pdf" width="100%" height="600px" />
     </div>
