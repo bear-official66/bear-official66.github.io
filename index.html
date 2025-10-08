@@ -629,7 +629,27 @@
     </div>
 
     <!-- 第一个表格：Pointing & Bounding Box & Task Planning -->
-    <div id="table1" class="leaderboard-content active">
+     <div id="table1" class="leaderboard-content active">
+
+      <div class="leaderboard-legend">
+        <div class="leaderboard-legend-item">
+          <div class="leaderboard-legend-box" style="background: #e3d4f4;"></div>
+          <span>Overall Best</span>
+        </div>
+        <div class="leaderboard-legend-item">
+          <div class="leaderboard-legend-box" style="background: #d4edda;"></div>
+          <span>Open-source Best</span>
+        </div>
+        <div class="leaderboard-legend-item">
+          <div class="leaderboard-legend-box" style="background: #fff3cd;"></div>
+          <span>Proprietary Models</span>
+        </div>
+        <div class="leaderboard-legend-item">
+          <div class="leaderboard-legend-box" style="background: #d1ecf1;"></div>
+          <span>Human Performance</span>
+        </div>
+      </div>
+
       <div class="leaderboard-wrapper">
         <table class="leaderboard-table">
           <thead>
@@ -654,7 +674,7 @@
           <tbody>
             <tr class="leaderboard-random-row">
               <td class="leaderboard-model-name">Random Choice</td>
-              <td class="format-col">-</td>
+	  <td class="format-col">-</td>
               <td>-</td>
               <td>-</td>
               <td>-</td>
@@ -665,7 +685,7 @@
               <td>25</td>
             </tr>
             <tr class="leaderboard-human-row">
-              <td class="leaderboard-model-name">Human</td>
+              <td class="leaderboard-model-name">Human Performance</td>
               <td class="format-col">-</td>
               <td>95.50</td>
               <td>92.00</td>
@@ -681,9 +701,9 @@
               <td colspan="10" class="leaderboard-section-header">Proprietary Models</td>
             </tr>
             
-            <tr class="leaderboard-proprietary-row">
+            <tr class="leaderboard-proprietary">
               <td class="leaderboard-model-name">GPT-o3</td>
-              <td class="format-col">sequential</td>
+<td class="format-col">sequential</td>
               <td>59.12</td>
               <td>44.44</td>
               <td class="leaderboard-best">55.41</td>
@@ -694,9 +714,9 @@
               <td>55.33</td>
             </tr>
             
-            <tr class="leaderboard-proprietary-row">
+            <tr class="leaderboard-proprietary">
               <td class="leaderboard-model-name">GPT-5</td>
-              <td class="format-col">sequential</td>
+	  <td class="format-col">sequential</td>
               <td class="leaderboard-best">70.00</td>
               <td class="leaderboard-best">63.69</td>
               <td>54.90</td>
@@ -707,7 +727,7 @@
               <td class="leaderboard-best">61.00</td>
             </tr>
             
-            <tr class="leaderboard-proprietary-row">
+            <tr class="leaderboard-proprietary">
               <td class="leaderboard-model-name">Gemini-2.5-Pro</td>
               <td class="format-col">sequential</td>
               <td>55.00</td>
@@ -720,7 +740,7 @@
               <td>49.00</td>
             </tr>
             
-            <tr class="leaderboard-proprietary-row">
+            <tr class="leaderboard-proprietary">
               <td class="leaderboard-model-name">Gemini-2.5-Flash</td>
               <td class="format-col">sequential</td>
               <td>46.76</td>
@@ -733,7 +753,7 @@
               <td>43.67</td>
             </tr>
             
-            <tr class="leaderboard-proprietary-row">
+            <tr class="leaderboard-proprietary">
               <td class="leaderboard-model-name">Gemini-2.0-Flash</td>
               <td class="format-col">sequential</td>
               <td>51.76</td>
@@ -750,7 +770,7 @@
               <td colspan="10" class="leaderboard-section-header">Open-source Models</td>
             </tr>
             
-            <tr class="leaderboard-opensource-row">
+            <tr class="leaderboard-opensource">
               <td class="leaderboard-model-name">InternVL3-14B</td>
               <td class="format-col">merged</td>
               <td>37.94</td>
@@ -763,7 +783,7 @@
               <td>33.00</td>
             </tr>
             
-            <tr class="leaderboard-opensource-row">
+            <tr class="leaderboard-opensource">
               <td class="leaderboard-model-name">InternVL3-8B</td>
               <td class="format-col">merged</td>
               <td class="leaderboard-best">52.65</td>
@@ -776,30 +796,30 @@
               <td>33.67</td>
             </tr>
             
-            <tr class="leaderboard-opensource-row">
+            <tr class="leaderboard-opensource">
               <td class="leaderboard-model-name">InternVL2-40B</td>
               <td class="format-col">merged</td>
               <td>23.24</td>
               <td>21.24</td>
               <td>22.29</td>
               <td>0.329</td>
-              <td class="leaderboard-second-best">0.269</td>
-              <td class="leaderboard-second-best">0.268</td>
+              <td class="leaderboard-top-opensource">0.269</td>
+              <td class="leaderboard-top-opensource">0.268</td>
               <td>40.00</td>
               <td>33.67</td>
             </tr>
             
-            <tr class="leaderboard-opensource-row">
+            <tr class="leaderboard-opensource">
               <td class="leaderboard-model-name">Qwen2.5-VL-32B</td>
               <td class="format-col">merged</td>
               <td>27.35</td>
-              <td class="leaderboard-second-best">27.78</td>
-              <td class="leaderboard-second-best">42.68</td>
+              <td class="leaderboard-top-opensource">27.78</td>
+              <td class="leaderboard-top-opensource">42.68</td>
               <td>0.020</td>
               <td>0.018</td>
               <td>0.017</td>
-              <td class="leaderboard-second-best">42.67</td>
-              <td class="leaderboard-best">42.33</td>
+              <td class="leaderboard-top-opensource">42.67</td>
+              <td class="leaderboard-top-opensource">42.33</td>
             </tr>
             
             <tr class="leaderboard-opensource-row">
