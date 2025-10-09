@@ -433,9 +433,10 @@
       </p>
     </div>
     </div>
-    
+
+<!-- Statistics Section -->
 <div id="statistics-section" class="text-section">
-  <h2 class="section-header perception-color">Statistics</h2>
+  <h2 class="section-header failure-color">Statistics</h2>
   
   <style>
     .statistics-container {
@@ -579,62 +580,53 @@
   <div class="statistics-container">
     <div class="carousel-container">
       <div class="carousel-track" id="statisticsCarouselTrack">
-        <!-- Slide 1: Sample Distribution -->
+        <!-- Slide 1: Category Distribution -->
         <div class="carousel-slide">
           <div class="chart-container">
-            <canvas id="sampleDistributionChart"></canvas>
-          </div>
-          <div class="stats-legend">
-            <div class="legend-item">
-              <div class="legend-color legend-mean"></div>
-              <span>Mean = 747.8</span>
-            </div>
-            <div class="legend-item">
-              <div class="legend-color legend-median"></div>
-              <span>Median = 650.0</span>
-            </div>
+            <canvas id="categoryDistributionChart"></canvas>
           </div>
           <div class="chart-description">
-            The distribution of samples across different categories in <strong>BEAR</strong>.<br>
-            Shows the number of VQA samples per embodied skill category.
+            <strong>BEAR category distribution.</strong><br>
+            Distribution of the 4,469 samples across main categories and subtypes.<br>
+            Each segment shows the detailed breakdown of embodied AI capabilities.
           </div>
         </div>
 
-        <!-- Slide 2: Model Performance Distribution -->
+        <!-- Slide 2: Model Performance Comparison -->
         <div class="carousel-slide">
           <div class="chart-container">
             <canvas id="performanceChart"></canvas>
           </div>
           <div class="stats-legend">
             <div class="legend-item">
-              <div class="legend-color" style="background: var(--perception-color);"></div>
-              <span>Proprietary Models</span>
+              <div class="legend-color" style="background: #c084c0;"></div>
+              <span>Proprietary Avg: 39.2</span>
             </div>
             <div class="legend-item">
-              <div class="legend-color" style="background: var(--modeling-color);"></div>
-              <span>Open-source Models</span>
+              <div class="legend-color" style="background: #8bc59d;"></div>
+              <span>Open-source Avg: 25.8</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-color" style="background: #f0c674;"></div>
+              <span>Performance Gap: 13.4</span>
             </div>
           </div>
           <div class="chart-description">
-            Average performance comparison between proprietary and open-source models.<br>
-            Performance measured across all BEAR benchmark categories.
+            <strong>Overall performance comparison.</strong><br>
+            Performance scores of proprietary vs open-source models on BEAR benchmark.<br>
+            Shows significant gap between model types across all evaluated capabilities.
           </div>
         </div>
 
-        <!-- Slide 3: Skill Category Breakdown -->
+        <!-- Slide 3: Key Statistics -->
         <div class="carousel-slide">
           <div class="chart-container">
-            <canvas id="skillBreakdownChart"></canvas>
-          </div>
-          <div class="stats-legend">
-            <div class="legend-item">
-              <div class="legend-color" style="background: var(--perception-color);"></div>
-              <span>Embodied Skills</span>
-            </div>
+            <canvas id="statisticsChart"></canvas>
           </div>
           <div class="chart-description">
-            Distribution of the 4,469 samples across 6 main categories.<br>
-            Each category tests different aspects of embodied AI capabilities.
+            <strong>BEAR key statistics.</strong><br>
+            Total questions: 4,469 | Categories: 6 | Subtypes: 15<br>
+            Multiple-choice: 57.4% | Free-form: 42.6% | Newly generated: 93.3%
           </div>
         </div>
       </div>
@@ -657,6 +649,244 @@
   </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+<script>
+  // Statistics carousel functionality
+  let currentStatisticsSlide = 0;
+  const totalStatisticsSlides = 3;
+  const statisticsTrack = document.getElementById('statisticsCarouselTrack');
+  const statisticsIndicators = document.querySelectorAll('#statistics-section .indicator');
+
+  function updateStatisticsSlide() {
+    statisticsTrack.style.transform = `translateX(-${currentStatisticsSlide * 33.333}%)`;
+    statisticsIndicators.forEach((indicator, index) => {
+      indicator.classList.toggle('active', index === currentStatisticsSlide);
+    });
+  }
+
+  function nextStatisticsSlide() {
+    currentStatisticsSlide = (currentStatisticsSlide + 1) % totalStatisticsSlides;
+    updateStatisticsSlide();
+  }
+
+  function previousStatisticsSlide() {
+    currentStatisticsSlide = (currentStatisticsSlide - 1 + totalStatisticsSlides) % totalStatisticsSlides;
+    updateStatisticsSlide();
+  }
+
+  function goToStatisticsSlide(slideIndex) {
+    currentStatisticsSlide = slideIndex;
+    updateStatisticsSlide();
+  }
+
+  // Chart initialization
+  function initStatisticsCharts() {
+    const chartOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          display: false
+        }
+      }
+    };
+
+    // Category Distribution Chart - Focus on subtypes only
+    const categoryCtx = document.getElementById('categoryDistributionChart').getContext('2d');
+    new Chart(categoryCtx, {
+      type: 'doughnut',
+      data: {
+        labels: [
+          'General Object Pointing (340)', 'Spatial Relationship Pointing (314)', 'Semantic Part Pointing (306)',
+          'General Object BBox (340)', 'Spatial Relationship BBox (306)', 'Semantic Part BBox (300)',
+          'Gripper Trajectory Reasoning (312)', 'Human Hand Trajectory Reasoning (297)', 'Object Trajectory Reasoning (300)',
+          'Object Localization (307)', 'Path Planning (207)', 'Relative Direction (300)',
+          'Task Process Reasoning (300)', 'Next Action Prediction (300)'
+        ],
+        datasets: [{
+          data: [340, 314, 306, 340, 306, 300, 312, 297, 300, 307, 207, 300, 300, 300],
+          backgroundColor: [
+            '#E8E4FF', '#D6D0FF', '#C4BCFF',  // Pointing variants
+            '#FFE8D4', '#FFD6B8', '#FFC49C',  // BBox variants  
+            '#D4FFE8', '#B8FFD6', '#9CFFC4',  // Trajectory variants
+            '#FFE4E8', '#FFD0D6', '#FFBCC4',  // Spatial variants
+            '#E8F4FF', '#D0E8FF'              // Task Planning variants
+          ],
+          borderWidth: 2,
+          borderColor: '#ffffff'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: '40%',
+        plugins: {
+          legend: {
+            display: true,
+            position: 'bottom',
+            labels: {
+              padding: 10,
+              usePointStyle: true,
+              font: {
+                size: 9
+              },
+              generateLabels: function(chart) {
+                const data = chart.data;
+                return data.labels.map((label, index) => ({
+                  text: label.length > 35 ? label.substring(0, 32) + '...' : label,
+                  fillStyle: data.datasets[0].backgroundColor[index],
+                  strokeStyle: data.datasets[0].backgroundColor[index],
+                  pointStyle: 'circle'
+                }));
+              }
+            }
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                return context.label;
+              }
+            }
+          }
+        }
+      }
+    });
+
+    // Performance Chart - Horizontal Bar Chart
+    const performanceCtx = document.getElementById('performanceChart').getContext('2d');
+    new Chart(performanceCtx, {
+      type: 'bar',
+      data: {
+        labels: [
+          'GPT-5', 'GPT-o3', 'Gemini-2.5-Pro', 'Gemini-2.5-Flash', 'Gemini-2.0-Flash', 
+          'Claude-4-Sonnet', 'GPT-4o', 'Claude-3.7-Sonnet',
+          'InternVL3-14B', 'InternVL3-8B', 'InternVL2-8B', 'InternVL2-40B', 
+          'Qwen2.5-32B', 'Molmo-7B-D-0924', 'DeepSeek-7B', 'LLaVa-Llama3-8B'
+        ],
+        datasets: [{
+          data: [52.2, 47.6, 41.5, 38.2, 36.0, 33.0, 32.9, 32.1, 33.9, 33.3, 33.3, 28.4, 28.3, 24.2, 23.9, 21.6],
+          backgroundColor: [
+            '#c084c0', '#c084c0', '#c084c0', '#c084c0', '#c084c0', '#c084c0', '#c084c0', '#c084c0',
+            '#8bc59d', '#8bc59d', '#8bc59d', '#8bc59d', '#8bc59d', '#8bc59d', '#8bc59d', '#8bc59d'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false
+          }
+        },
+        scales: {
+          x: {
+            beginAtZero: true,
+            max: 60,
+            title: {
+              display: true,
+              text: 'Overall Performance Score'
+            }
+          },
+          y: {
+            ticks: {
+              font: {
+                size: 10
+              }
+            }
+          }
+        }
+      }
+    });
+
+    // Statistics Chart - Key Numbers (Fixed)
+    const statisticsCtx = document.getElementById('statisticsChart').getContext('2d');
+    new Chart(statisticsCtx, {
+      type: 'doughnut',
+      data: {
+        labels: [
+          'Only Images (64.6%)', 
+          'Only Videos (22.2%)', 
+          'Interleaved (13.2%)'
+        ],
+        datasets: [{
+          data: [2886, 995, 588],
+          backgroundColor: ['#4285f4', '#34a853', '#fbbc05'],
+          borderWidth: 2,
+          borderColor: '#ffffff'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: '50%',
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: {
+              padding: 15,
+              usePointStyle: true,
+              font: {
+                size: 12
+              }
+            }
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                const label = context.label;
+                const value = context.parsed;
+                return `${label}: ${value.toLocaleString()}`;
+              }
+            }
+          }
+        }
+      }
+    });
+  }
+
+  // Touch support for statistics carousel
+  let statisticsStartX = 0;
+  let statisticsCurrentX = 0;
+  let statisticsIsDragging = false;
+
+  statisticsTrack.addEventListener('touchstart', (e) => {
+    statisticsStartX = e.touches[0].clientX;
+    statisticsIsDragging = true;
+  });
+
+  statisticsTrack.addEventListener('touchmove', (e) => {
+    if (!statisticsIsDragging) return;
+    statisticsCurrentX = e.touches[0].clientX;
+    e.preventDefault();
+  });
+
+  statisticsTrack.addEventListener('touchend', () => {
+    if (!statisticsIsDragging) return;
+    statisticsIsDragging = false;
+    
+    const diffX = statisticsStartX - statisticsCurrentX;
+    const threshold = 50;
+
+    if (Math.abs(diffX) > threshold) {
+      if (diffX > 0) {
+        nextStatisticsSlide();
+      } else {
+        previousStatisticsSlide();
+      }
+    }
+  });
+
+  // Initialize everything when page loads
+  window.addEventListener('load', () => {
+    initStatisticsCharts();
+  });
+</script>
+
+
+<!-- Leaderboard Section -->
 <div id="leaderboard-section" class="text-section">
   <h2 class="section-header manipulation-color">BEAR Leaderboard</h2>
   <p><strong>We evaluate 20 representitive MLLMs</strong>, including 12 open-sourced models and 8 proprietary models. GEN = General Object (Pointing/Box); SPA = Spatial Object (Pointing/Box); PRT = Semantic Part (Pointing/Box); PRG = Task Process Reasoning; PRD = Next Action Prediction; GPR = Gripper Trajectory Reasoning; HND = Human Hand Trajectory Reasoning; OBJ = Object Trajectory Reasoning; LOC = Object Localization; PTH = Path Planning; DIR = Relative Direction. BBox scores are scaled by 100 when computing overall average. We refer readers to original papers for details.</p>
@@ -1259,6 +1489,8 @@
   </div>
 </div>
 
+
+<!-- Citations and Others -->
     <div class="content-wrapper">
       <div class="citation-section">
         <h2>BibTeX</h2>
