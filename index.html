@@ -822,7 +822,7 @@
               <td class="leaderboard-top-opensource">42.33</td>
             </tr>
             
-            <tr class="leaderboard-opensource-row">
+            <tr class="leaderboard-opensource">
               <td class="leaderboard-model-name">InternVL2-26B</td>
               <td class="format-col">merged</td>
               <td>21.18</td>
@@ -1085,6 +1085,24 @@
             console.error('Failed to copy citation.');
           }
           document.body.removeChild(textArea); // Clean up
+        }
+
+        function switchLeaderboardTab(evt, tabName) {
+          // Hide all content
+          var contents = document.getElementsByClassName("leaderboard-content");
+          for (var i = 0; i < contents.length; i++) {
+            contents[i].classList.remove("active");
+          }
+          
+          // Remove active class from all tabs
+          var tabs = document.getElementsByClassName("leaderboard-tab");
+          for (var i = 0; i < tabs.length; i++) {
+            tabs[i].classList.remove("active");
+          }
+          
+          // Show selected content and mark tab as active
+          document.getElementById(tabName).classList.add("active");
+          evt.currentTarget.classList.add("active");
         }
       </script>
 
